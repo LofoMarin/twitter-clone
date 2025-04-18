@@ -1,0 +1,21 @@
+.tweets-list {
+  margin-top: 20px;
+}
+
+.loading,
+.no-tweets {
+  text-align: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.loading {
+  color: #666;
+}
+
+.no-tweets {
+  color: #666;
+  font-style: italic;
+}

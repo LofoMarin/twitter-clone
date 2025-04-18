@@ -1,0 +1,122 @@
+.tweet {
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.tweet-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.tweet-user {
+  font-weight: bold;
+}
+
+.tweet-date {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.tweet-content {
+  margin-bottom: 15px;
+  word-wrap: break-word;
+}
+
+.tweet-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.tweet-action {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tweet-action:hover {
+  color: #1da1f2;
+}
+
+.tweet-action.liked {
+  color: #e0245e;
+}
+
+.tweet-action.delete:hover {
+  color: #e0245e;
+}
+
+.tweet-comments {
+  margin-top: 10px;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.comment-form {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.comments-list {
+  margin-top: 10px;
+}
+
+.comment {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.comment:last-child {
+  border-bottom: none;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.comment-date {
+  color: #666;
+}
+
+.comment-content {
+  word-wrap: break-word;
+}
+
+.delete-comment {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+}
+
+.delete-comment:hover {
+  color: #e0245e;
+}
+
+.no-comments {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+}

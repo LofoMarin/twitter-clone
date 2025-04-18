@@ -1,0 +1,38 @@
+.profile {
+  width: 100%;
+}
+
+.profile-header {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  margin-top: 15px;
+}
+
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.profile-username {
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.profile-email {
+  color: #666;
+}
+
+.profile-tweets {
+  margin-top: 20px;
+}
+
+.profile-tweets h3 {
+  margin-bottom: 15px;
+}
