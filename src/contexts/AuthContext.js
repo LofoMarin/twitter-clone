@@ -105,7 +105,6 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Si hay un usuario autenticado, obtener su información adicional de Firestore
         const userDoc = await getDoc(doc(db, "users", user.uid))
         if (userDoc.exists()) {
           setCurrentUser({
@@ -130,7 +129,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     resetPassword,
-    updateUserProfile, // Añadimos la nueva función al contexto
+    updateUserProfile, 
     loading,
   }
 

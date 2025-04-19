@@ -1,4 +1,3 @@
-// src/App.js
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import Login from "./components/auth/Login";
@@ -8,9 +7,8 @@ import Timeline from "./components/timeline/Timeline";
 import Profile from "./components/profile/Profile";
 import Navbar from "./components/layout/Navbar";
 import "./App.css"; 
-import "./twitter-clone-theme.css"; // Importamos el nuevo CSS
+import "./twitter-clone-theme.css"; 
 
-// Componente para rutas protegidas
 const PrivateRoute = ({ children }) => {
   const { currentUser } = useAuth();
   return currentUser ? children : <Navigate to="/login" />;
