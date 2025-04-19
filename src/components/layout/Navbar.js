@@ -1,18 +1,21 @@
-"use client"
-import { Link, useNavigate } from "react-router-dom"
-import { useAuth } from "../../contexts/AuthContext"
-import "./Navbar.css"
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Navbar() {
-  const { currentUser, logout } = useAuth()
-  const navigate = useNavigate()
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const getAvatarUrl = (username, name) => {
+    const displayName = name || username || "usuario";
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=random&color=fff&size=64`;
+  };
 
   async function handleLogout() {
     try {
-      await logout()
-      navigate("/login")
+      await logout();
+      navigate("/login");
     } catch (error) {
-      console.error("Error al cerrar sesión:", error)
+      console.error("Error al cerrar sesión:", error);
     }
   }
 
@@ -20,7 +23,8 @@ function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          X Clone
+          <div className="logo-icon">T</div>
+          <span>Not Twitter</span>
         </Link>
 
         {currentUser ? (
@@ -31,7 +35,17 @@ function Navbar() {
             <Link to="/profile" className="navbar-link">
               Perfil
             </Link>
-            <button onClick={handleLogout} className="logout-btn">
+            <Link to="/profile" className="user-info">
+              <img 
+                src={getAvatarUrl(currentUser.username, currentUser.name || currentUser.displayName)} 
+                alt={currentUser.name || "Usuario"} 
+                className="user-info-avatar"
+              />
+              <span className="user-info-name">
+                {currentUser.name || currentUser.displayName || currentUser.username || "Usuario"}
+              </span>
+            </Link>
+            <button onClick={handleLogout} className="btn btn-danger">
               Cerrar Sesión
             </button>
           </div>
@@ -47,7 +61,7 @@ function Navbar() {
         )}
       </div>
     </nav>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

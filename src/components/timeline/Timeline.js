@@ -1,27 +1,25 @@
-"use client"
-
-import { useState } from "react"
-import TweetForm from "../tweets/TweetForm"
-import TweetsList from "../tweets/TweetsList"
-import { useAuth } from "../../contexts/AuthContext"
-import "./Timeline.css"
+import { useState } from "react";
+import TweetForm from "../tweets/TweetForm";
+import TweetsList from "../tweets/TweetsList";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Timeline() {
-  const { currentUser } = useAuth()
-  const [refreshKey, setRefreshKey] = useState(0)
+  const { currentUser } = useAuth();
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleTweetCreated = () => {
-    // Forzar actualización de la lista de tweets
-    setRefreshKey((prevKey) => prevKey + 1)
-  }
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
 
   return (
-    <div className="timeline">
-      <h2>Inicio</h2>
+    <div className="main-container">
+      <header className="timeline-header">
+        Inicio
+      </header>
       <TweetForm onTweetCreated={handleTweetCreated} />
       <TweetsList onRefresh={refreshKey} />
     </div>
-  )
+  );
 }
 
-export default Timeline
+export default Timeline;

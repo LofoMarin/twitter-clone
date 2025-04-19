@@ -9,7 +9,7 @@ import {
   updateProfile,
   onAuthStateChanged,
 } from "firebase/auth"
-import { doc, setDoc, getDoc } from "firebase/firestore"
+import { doc, setDoc, getDoc, updateDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
 
 const AuthContext = createContext()
@@ -57,6 +57,39 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Nueva función para actualizar el perfil del usuario
+  async function updateUserProfile(profileData) {
+    try {
+      // Verificar si hay un usuario autenticado
+      if (!auth.currentUser) {
+        throw new Error("No hay un usuario autenticado")
+      }
+
+      // Actualizar en Firebase Auth
+      await updateProfile(auth.currentUser, profileData)
+      
+      // Actualizar también en Firestore
+      const userRef = doc(db, "users", auth.currentUser.uid)
+      await updateDoc(userRef, {
+        ...profileData,
+        updatedAt: new Date().toISOString()
+      })
+      
+      // Actualizar el estado del usuario actual
+      if (currentUser) {
+        setCurrentUser({
+          ...currentUser,
+          ...profileData
+        })
+      }
+
+      return true
+    } catch (error) {
+      console.error("Error al actualizar el perfil:", error)
+      throw error
+    }
+  }
+
   function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password)
   }
@@ -97,6 +130,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     resetPassword,
+    updateUserProfile, // Añadimos la nueva función al contexto
     loading,
   }
 

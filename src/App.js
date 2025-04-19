@@ -1,19 +1,20 @@
-"use client"
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import { AuthProvider, useAuth } from "./contexts/AuthContext"
-import Login from "./components/auth/Login"
-import Register from "./components/auth/Register"
-import ResetPassword from "./components/auth/ResetPassword"
-import Timeline from "./components/timeline/Timeline"
-import Profile from "./components/profile/Profile"
-import Navbar from "./components/layout/Navbar"
-import "./App.css"
+// src/App.js
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
+import ResetPassword from "./components/auth/ResetPassword";
+import Timeline from "./components/timeline/Timeline";
+import Profile from "./components/profile/Profile";
+import Navbar from "./components/layout/Navbar";
+import "./App.css"; 
+import "./twitter-clone-theme.css"; // Importamos el nuevo CSS
 
 // Componente para rutas protegidas
 const PrivateRoute = ({ children }) => {
-  const { currentUser } = useAuth()
-  return currentUser ? children : <Navigate to="/login" />
-}
+  const { currentUser } = useAuth();
+  return currentUser ? children : <Navigate to="/login" />;
+};
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
       <AuthProvider>
         <div className="app">
           <Navbar />
-          <div className="container">
+          <div className="layout-container">
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -47,7 +48,7 @@ function App() {
         </div>
       </AuthProvider>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
