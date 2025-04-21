@@ -12,7 +12,6 @@ function Timeline() {
   const [welcomeMessage, setWelcomeMessage] = useState("")
 
   useEffect(() => {
-    // Check if user just registered or logged in
     const justRegistered = localStorage.getItem("registrationSuccess")
     const justLoggedIn = localStorage.getItem("loginSuccess")
 
@@ -30,7 +29,6 @@ function Timeline() {
       localStorage.removeItem("loginSuccess")
     }
 
-    // Hide welcome message after 5 seconds
     if (showWelcome) {
       const timer = setTimeout(() => {
         setShowWelcome(false)

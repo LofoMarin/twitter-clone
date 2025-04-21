@@ -24,21 +24,17 @@ export function AuthProvider({ children }) {
 
   async function register(name, email, username, password) {
     try {
-      // Verificar si el username ya existe
       const usernameDoc = await getDoc(doc(db, "usernames", username))
       if (usernameDoc.exists()) {
         throw new Error("El nombre de usuario ya está en uso")
       }
 
-      // Crear usuario en Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
 
-      // Actualizar el perfil con el nombre
       await updateProfile(userCredential.user, {
         displayName: name,
       })
 
-      // Guardar información adicional en Firestore
       await setDoc(doc(db, "users", userCredential.user.uid), {
         name,
         email,
@@ -46,7 +42,6 @@ export function AuthProvider({ children }) {
         createdAt: new Date().toISOString(),
       })
 
-      // Reservar el username
       await setDoc(doc(db, "usernames", username), {
         uid: userCredential.user.uid,
       })
@@ -57,25 +52,20 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Nueva función para actualizar el perfil del usuario
   async function updateUserProfile(profileData) {
     try {
-      // Verificar si hay un usuario autenticado
       if (!auth.currentUser) {
         throw new Error("No hay un usuario autenticado")
       }
 
-      // Actualizar en Firebase Auth
       await updateProfile(auth.currentUser, profileData)
       
-      // Actualizar también en Firestore
       const userRef = doc(db, "users", auth.currentUser.uid)
       await updateDoc(userRef, {
         ...profileData,
         updatedAt: new Date().toISOString()
       })
       
-      // Actualizar el estado del usuario actual
       if (currentUser) {
         setCurrentUser({
           ...currentUser,

@@ -15,7 +15,6 @@ import {
 } from "firebase/firestore"
 import { db } from "../firebase"
 
-// Crear un tweet
 export const createTweet = async (userId, content) => {
   try {
     const tweetRef = await addDoc(collection(db, "tweets"), {
@@ -31,7 +30,6 @@ export const createTweet = async (userId, content) => {
   }
 }
 
-// Obtener todos los tweets de un usuario
 export const getUserTweets = async (userId) => {
   try {
     const q = query(collection(db, "tweets"), where("userId", "==", userId), orderBy("createdAt", "desc"))
@@ -47,7 +45,6 @@ export const getUserTweets = async (userId) => {
   }
 }
 
-// Obtener un tweet específico
 export const getTweet = async (tweetId) => {
   try {
     const tweetDoc = await getDoc(doc(db, "tweets", tweetId))
@@ -65,7 +62,6 @@ export const getTweet = async (tweetId) => {
   }
 }
 
-// Eliminar un tweet
 export const deleteTweet = async (tweetId, userId) => {
   try {
     const tweetDoc = await getDoc(doc(db, "tweets", tweetId))
@@ -84,7 +80,6 @@ export const deleteTweet = async (tweetId, userId) => {
   }
 }
 
-// Añadir un comentario a un tweet
 export const addComment = async (tweetId, userId, comment) => {
   try {
     const tweetRef = doc(db, "tweets", tweetId)
@@ -105,7 +100,6 @@ export const addComment = async (tweetId, userId, comment) => {
   }
 }
 
-// Eliminar un comentario de un tweet
 export const deleteComment = async (tweetId, commentId, userId) => {
   try {
     const tweetDoc = await getDoc(doc(db, "tweets", tweetId))
@@ -134,7 +128,6 @@ export const deleteComment = async (tweetId, commentId, userId) => {
   }
 }
 
-// Dar/quitar like a un tweet
 export const toggleLike = async (tweetId, userId) => {
   try {
     const tweetRef = doc(db, "tweets", tweetId)

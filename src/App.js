@@ -12,12 +12,10 @@ import { useEffect, useState } from "react"
 import "./App.css"
 import "./twitter-clone-theme.css"
 
-// Create a separate component for routes that need authentication
 function AppRoutes() {
   const { currentUser, loading } = useAuth()
   const [authChecked, setAuthChecked] = useState(false)
 
-  // Wait for auth state to be determined
   useEffect(() => {
     const checkAuthTimeout = setTimeout(() => {
       setAuthChecked(true)
@@ -26,7 +24,6 @@ function AppRoutes() {
     return () => clearTimeout(checkAuthTimeout)
   }, [])
 
-  // Show a loading state while checking authentication
   if (loading) {
     return (
       <div className="loading">
@@ -52,7 +49,6 @@ function AppRoutes() {
   )
 }
 
-// Main App component that doesn't use useAuth()
 function App() {
   return (
     <Router>
