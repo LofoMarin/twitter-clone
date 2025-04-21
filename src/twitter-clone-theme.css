@@ -314,7 +314,9 @@ body {
   margin-right: 0.3rem;
 }
 
-.tweet-username, .tweet-dot, .tweet-time {
+.tweet-username,
+.tweet-dot,
+.tweet-time {
   color: #536471;
   font-size: 0.9rem;
 }
@@ -333,7 +335,7 @@ body {
   display: flex;
   justify-content: space-between;
   max-width: 300px;
-  margin-top: 0.5rem; 
+  margin-top: 0.5rem;
 }
 
 .tweet-action {
@@ -474,156 +476,6 @@ body {
 }
 
 .profile-header {
-  background-color: #f7f9fa;
-  border-radius: 16px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-.profile-user {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.profile-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-right: 1rem;
-}
-
-.profile-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-
-.profile-username {
-  color: #536471;
-  font-size: 1rem;
-}
-
-.profile-info {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.profile-info-item {
-  display: flex;
-  align-items: center;
-  color: #536471;
-}
-
-.profile-info-item .icon {
-  margin-right: 0.5rem;
-}
-
-.profile-stats {
-  display: flex;
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.profile-stat {
-  display: flex;
-}
-
-.profile-stat-number {
-  font-weight: 700;
-  margin-right: 0.25rem;
-}
-
-.profile-stat-label {
-  color: #536471;
-}
-
-.profile-tabs {
-  display: flex;
-  border-bottom: 1px solid #e6ecf0;
-  margin-bottom: 1rem;
-}
-
-.profile-tab {
-  flex: 1;
-  padding: 1rem;
-  font-weight: 600;
-  text-align: center;
-  color: #536471;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.profile-tab:hover, .profile-tab.active {
-  color: #1a8cd8;
-  box-shadow: inset 0 -2px 0 #1a8cd8;
-}
-
-/* Utilidades */
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  color: #536471;
-}
-
-.spinner {
-  border: 3px solid rgba(0, 0, 0, 0.1);
-  border-top-color: #1a8cd8;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.error {
-  background-color: rgba(224, 36, 94, 0.1);
-  color: #e0245e;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  margin: 1rem;
-}
-
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem 1rem;
-  color: #536471;
-  text-align: center;
-}
-
-.empty-state-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #1a8cd8;
-}
-
-.empty-state-text {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.empty-state-subtext {
-  font-size: 0.95rem;
-}
-
-
-/* Añadir al archivo twitter-clone-theme.css */
-
-.profile-header {
   background-color: #ffffff;
   border-radius: 16px;
   padding: 1.5rem;
@@ -746,4 +598,87 @@ body {
   width: 24px;
   height: 24px;
   border-radius: 50%;
+}
+
+/* Utilidades */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #536471;
+}
+
+.spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #1a8cd8;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  background-color: rgba(224, 36, 94, 0.1);
+  color: #e0245e;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #536471;
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #1a8cd8;
+}
+
+.empty-state-text {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-subtext {
+  font-size: 0.95rem;
+}
+
+/* Add styles for the welcome message */
+.welcome-message {
+  background-color: #1da1f2;
+  color: white;
+  padding: 12px 16px;
+  margin: 10px;
+  border-radius: 8px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -26,6 +26,7 @@ function Register() {
       setError("")
       setLoading(true)
       await register(name, email, username, password)
+      localStorage.setItem("registrationSuccess", "true")
       navigate("/")
     } catch (error) {
       setError("Error al crear la cuenta: " + error.message)

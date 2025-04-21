@@ -18,11 +18,19 @@ function Login() {
     try {
       setError("")
       setLoading(true)
+
+      // Login and wait for it to complete
       await login(email, password)
-      navigate("/")
+
+      // Add a small delay to ensure Firebase auth state is updated
+      setTimeout(() => {
+        // Store a flag to indicate successful login
+        localStorage.setItem("loginSuccess", "true")
+        // Navigate to home page
+        navigate("/")
+      }, 1000)
     } catch (error) {
       setError("Error al iniciar sesión: " + error.message)
-    } finally {
       setLoading(false)
     }
   }
