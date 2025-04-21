@@ -1,104 +1,128 @@
-import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import { deleteTweet, toggleLike, addComment, deleteComment } from "../../services/tweetService";
+"use client"
+
+import { useState, useEffect } from "react"
+import { useAuth } from "../../contexts/AuthContext"
+import { deleteTweet, toggleLike, addComment, deleteComment } from "../../services/tweetService"
+import { getDoc, doc } from "firebase/firestore"
+import { db } from "../../firebase"
 
 function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
-  const { currentUser } = useAuth();
-  const [showComments, setShowComments] = useState(false);
-  const [newComment, setNewComment] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { currentUser } = useAuth()
+  const [showComments, setShowComments] = useState(false)
+  const [newComment, setNewComment] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  const isOwner = tweet.userId === currentUser.uid;
-  const hasLiked = tweet.likes && tweet.likes.includes(currentUser.uid);
-  const commentsCount = tweet.comments ? tweet.comments.length : 0;
-  const likesCount = tweet.likes ? tweet.likes.length : 0;
+  const isOwner = tweet.userId === currentUser.uid
+  const hasLiked = tweet.likes && tweet.likes.includes(currentUser.uid)
+  const commentsCount = tweet.comments ? tweet.comments.length : 0
+  const likesCount = tweet.likes ? tweet.likes.length : 0
+
+  // Ensure we have user information even if it wasn't loaded with the tweet
+  useEffect(() => {
+    const loadUserData = async () => {
+      if (!tweet.name || !tweet.username) {
+        try {
+          const userDoc = await getDoc(doc(db, "users", tweet.userId))
+          if (userDoc.exists()) {
+            const userData = userDoc.data()
+            // Update the tweet with user data
+            tweet.name = userData.name
+            tweet.username = userData.username
+            // Force a re-render
+            setError("")
+          }
+        } catch (error) {
+          console.error("Error loading user data:", error)
+        }
+      }
+    }
+
+    loadUserData()
+  }, [tweet])
 
   const getAvatarUrl = (username, name) => {
-    const displayName = name || username || "usuario";
-    return `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=random&color=fff&size=128`;
-  };
+    const displayName = name || username || "usuario"
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=random&color=fff&size=128`
+  }
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString() + " " + date.toLocaleTimeString();
-  };
+    const date = new Date(dateString)
+    return date.toLocaleDateString() + " " + date.toLocaleTimeString()
+  }
 
   const handleDelete = async () => {
     if (!window.confirm("¿Estás seguro de que quieres eliminar este tweet?")) {
-      return;
+      return
     }
 
     try {
-      setLoading(true);
-      await deleteTweet(tweet.id, currentUser.uid);
+      setLoading(true)
+      await deleteTweet(tweet.id, currentUser.uid)
       if (onTweetDeleted) {
-        onTweetDeleted(tweet.id);
+        onTweetDeleted(tweet.id)
       }
     } catch (error) {
-      setError("Error al eliminar el tweet: " + error.message);
+      setError("Error al eliminar el tweet: " + error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleLike = async () => {
     try {
-      setLoading(true);
-      await toggleLike(tweet.id, currentUser.uid);
+      setLoading(true)
+      await toggleLike(tweet.id, currentUser.uid)
       if (onTweetUpdated) {
-        onTweetUpdated();
+        onTweetUpdated()
       }
     } catch (error) {
-      setError("Error al dar like: " + error.message);
+      setError("Error al dar like: " + error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleAddComment = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (!newComment.trim()) {
-      return;
+      return
     }
 
     try {
-      setLoading(true);
-      await addComment(tweet.id, currentUser.uid, newComment);
-      setNewComment("");
+      setLoading(true)
+      await addComment(tweet.id, currentUser.uid, newComment)
+      setNewComment("")
       if (onTweetUpdated) {
-        onTweetUpdated();
+        onTweetUpdated()
       }
     } catch (error) {
-      setError("Error al comentar: " + error.message);
+      setError("Error al comentar: " + error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleDeleteComment = async (commentId) => {
     try {
-      setLoading(true);
-      await deleteComment(tweet.id, commentId, currentUser.uid);
+      setLoading(true)
+      await deleteComment(tweet.id, commentId, currentUser.uid)
       if (onTweetUpdated) {
-        onTweetUpdated();
+        onTweetUpdated()
       }
     } catch (error) {
-      setError("Error al eliminar comentario: " + error.message);
+      setError("Error al eliminar comentario: " + error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="tweet">
       {error && <div className="error">{error}</div>}
       <div className="avatar">
-        <img 
-          src={getAvatarUrl(tweet.username, tweet.name)} 
-          alt={tweet.name || "Avatar"} 
-        />
+        <img src={getAvatarUrl(tweet.username, tweet.name) || "/placeholder.svg"} alt={tweet.name || "Avatar"} />
       </div>
       <div className="tweet-content">
         <div className="tweet-header">
@@ -117,9 +141,8 @@ function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
             </div>
             <span>{commentsCount}</span>
           </div>
-          
-          
-          <div className={`tweet-action like ${hasLiked ? 'liked' : ''}`} onClick={handleLike}>
+
+          <div className={`tweet-action like ${hasLiked ? "liked" : ""}`} onClick={handleLike}>
             <div className="icon">
               {hasLiked ? (
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
@@ -166,10 +189,10 @@ function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
                   <div key={comment.id} className="comment">
                     <div className="comment-header">
                       <div className="comment-user">
-                        <img 
-                          src={getAvatarUrl(comment.username)} 
-                          alt="Avatar" 
-                          className="comment-avatar" 
+                        <img
+                          src={getAvatarUrl(comment.username) || "/placeholder.svg"}
+                          alt="Avatar"
+                          className="comment-avatar"
                         />
                         <span>@{comment.username || "usuario"}</span>
                       </div>
@@ -195,7 +218,7 @@ function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default Tweet;
+export default Tweet

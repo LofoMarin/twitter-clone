@@ -155,3 +155,41 @@ export const toggleLike = async (tweetId, userId) => {
     throw error
   }
 }
+
+// Add this new function to fetch all tweets
+export const getAllTweets = async () => {
+  try {
+    const q = query(collection(db, "tweets"), orderBy("createdAt", "desc"))
+
+    const querySnapshot = await getDocs(q)
+    const tweets = []
+
+    for (const doc of querySnapshot.docs) {
+      const tweetData = {
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate().toISOString() || new Date().toISOString(),
+      }
+
+      // Get user data for each tweet
+      if (tweetData.userId) {
+        const userDoc = await getDoc(docRef(db, "users", tweetData.userId))
+        if (userDoc.exists()) {
+          tweetData.name = userDoc.data().name
+          tweetData.username = userDoc.data().username
+        }
+      }
+
+      tweets.push(tweetData)
+    }
+
+    return tweets
+  } catch (error) {
+    throw error
+  }
+}
+
+// Add this helper function to get a document reference
+const docRef = (db, collection, id) => {
+  return doc(db, collection, id)
+}

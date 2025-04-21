@@ -53,7 +53,7 @@ function Timeline() {
       )}
 
       <TweetForm onTweetCreated={handleTweetCreated} />
-      <TweetsList onRefresh={refreshKey} />
+      <TweetsList showGlobalFeed={true} onRefresh={refreshKey} />
     </div>
   )
 }
