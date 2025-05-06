@@ -4,12 +4,15 @@ import { useState, useEffect } from "react"
 import TweetForm from "../tweets/TweetForm"
 import TweetsList from "../tweets/TweetsList"
 import { useAuth } from "../../contexts/AuthContext"
+import { useFeatureIsOn } from "@growthbook/growthbook-react"
 
 function Timeline() {
   const { currentUser } = useAuth()
   const [refreshKey, setRefreshKey] = useState(0)
   const [showWelcome, setShowWelcome] = useState(false)
   const [welcomeMessage, setWelcomeMessage] = useState("")
+
+  const enabled = useFeatureIsOn("my-feature")
 
   useEffect(() => {
     const justRegistered = localStorage.getItem("registrationSuccess")
@@ -51,7 +54,7 @@ function Timeline() {
           <p>{welcomeMessage}</p>
         </div>
       )}
-
+      { !enabled && <button onClick={() => {throw new Error("This is your first error!");}}>Break the world</button> }
       <TweetForm onTweetCreated={handleTweetCreated} />
       <TweetsList showGlobalFeed={true} onRefresh={refreshKey} />
     </div>

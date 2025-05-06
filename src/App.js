@@ -12,6 +12,24 @@ import { useEffect, useState } from "react"
 import "./App.css"
 import "./twitter-clone-theme.css"
 
+import { GrowthBook } from "@growthbook/growthbook";
+import { GrowthBookProvider } from "@growthbook/growthbook-react";
+import { autoAttributesPlugin } from "@growthbook/growthbook/plugins";
+
+const growthbook = new GrowthBook({
+  apiHost: "https://cdn.growthbook.io",
+  clientKey: "sdk-EOldaSwv0zY3cSQj",
+  enableDevMode: true,
+  trackingCallback: (experiment, result) => {
+    // This is where you would send an event to your analytics provider
+    console.log("Viewed Experiment", {
+      experimentId: experiment.key,
+      variationId: result.key
+    });
+  },
+  plugins: [ autoAttributesPlugin() ],
+});
+
 function AppRoutes() {
   const { currentUser, loading } = useAuth()
   const [authChecked, setAuthChecked] = useState(false)
@@ -50,14 +68,21 @@ function AppRoutes() {
 }
 
 function App() {
+  useEffect(() => {
+    // Load features asynchronously when the app renders
+    growthbook.init({ streaming: true });
+  }, []);
+
   return (
-    <Router>
-      <AuthProvider>
-        <div className="app">
-          <AppRoutes />
-        </div>
-      </AuthProvider>
-    </Router>
+    <GrowthBookProvider growthbook={growthbook}>
+      <Router>
+        <AuthProvider>
+          <div className="app">
+            <AppRoutes />
+          </div>
+        </AuthProvider>
+      </Router>
+    </GrowthBookProvider>
   )
 }
 

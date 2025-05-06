@@ -139,7 +139,7 @@ export const toggleLike = async (tweetId, userId) => {
 
     const likes = tweetDoc.data().likes || []
     const hasLiked = likes.includes(userId)
-
+    
     if (hasLiked) {
       await updateDoc(tweetRef, {
         likes: arrayRemove(userId),

@@ -73,6 +73,7 @@ function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
     try {
       setLoading(true)
       await toggleLike(tweet.id, currentUser.uid)
+      console.log("toggled done")
       if (onTweetUpdated) {
         onTweetUpdated()
       }
