@@ -54,7 +54,7 @@ function Timeline() {
           <p>{welcomeMessage}</p>
         </div>
       )}
-      { !enabled && <button onClick={() => {throw new Error("This is your first error!");}}>Break the world</button> }
+      { enabled && <button onClick={() => {throw new Error("This is your second error!");}}>Break the world</button> }
       <TweetForm onTweetCreated={handleTweetCreated} />
       <TweetsList showGlobalFeed={true} onRefresh={refreshKey} />
     </div>
