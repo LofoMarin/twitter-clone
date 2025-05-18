@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext"
 import { deleteTweet, toggleLike, addComment, deleteComment } from "../../services/tweetService"
 import { getDoc, doc } from "firebase/firestore"
 import { db } from "../../firebase"
+import { format } from "date-fns"
 
 function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
   const { currentUser } = useAuth()
@@ -48,7 +49,7 @@ function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('en-US') + " " + date.toLocaleTimeString('en-US')
+    return format(date, "dd/MM/yyyy HH:mm a")
   }
 
   const handleDelete = async () => {

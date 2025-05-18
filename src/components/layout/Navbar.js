@@ -5,7 +5,6 @@ import { useFeatureValue } from "@growthbook/growthbook-react"
 function Navbar() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
-  console.log(useFeatureValue('new-feature'))
   const enabled = useFeatureValue('new-feature', false)  // Feature flag for rendering the button
 
   const getAvatarUrl = (username, name) => {

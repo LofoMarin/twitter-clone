@@ -12,7 +12,7 @@ const testTweets = [
     userId: "123",
     username: "testuser",
     name: "Test User",
-    createdAt: "2023-05-12T17:09:58Z",
+    createdAt: "2025-04-21T00:26:50.243Z",
     content: "This is a test tweet",
     likes: ["123"],
     comments: [
@@ -20,7 +20,7 @@ const testTweets = [
         id: "c1",
         userId: "456",
         username: "commenter",
-        createdAt: "2023-05-12T18:09:58Z",
+        createdAt: "2025-04-21T00:26:50.243Z",
         content: "This is a test comment",
       },
     ],
@@ -56,7 +56,7 @@ describe("TweetsList", () => {
     expect(screen.getByText("Test User")).toBeInTheDocument();
 
     // Check if tweet date is rendered
-    expect(screen.getByText("5/12/2023 12:09:58 PM")).toBeInTheDocument();
+    expect(screen.getByText("20/04/2025 19:26 PM")).toBeInTheDocument();
 
     // Check if like count is rendered
     const likeCounts = screen.getAllByText("1");
