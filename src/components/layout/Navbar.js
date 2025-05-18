@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { useFeatureValue } from "@growthbook/growthbook-react"
 
 function Navbar() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  console.log(useFeatureValue('new-feature'))
+  const enabled = useFeatureValue('new-feature', false)  // Feature flag for rendering the button
 
   const getAvatarUrl = (username, name) => {
     const displayName = name || username || "usuario";
@@ -45,9 +48,17 @@ function Navbar() {
                 {currentUser.name || currentUser.displayName || currentUser.username || "Usuario"}
               </span>
             </Link>
-            <button onClick={handleLogout} className="btn btn-danger">
-              Cerrar Sesión
-            </button>
+            { enabled ? (
+              <button onClick={handleLogout} className="btn btn-danger">
+                Cerrar Sesión
+              </button>
+              ) : (
+              <a href="#" onClick={handleLogout} className="btn btn-danger">
+                Cerrar Sesión
+              </a>
+              )
+            }
+            
           </div>
         ) : (
           <div className="navbar-links">

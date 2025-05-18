@@ -71,6 +71,11 @@ function App() {
   useEffect(() => {
     // Load features asynchronously when the app renders
     growthbook.init({ streaming: true });
+    // Set attribute manually to simulate different users
+    growthbook.setAttributes({
+      id: "user1",
+    });
+    console.log("GrowthBook initialized.");
   }, []);
 
   return (
