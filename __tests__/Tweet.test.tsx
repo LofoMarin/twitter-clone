@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import Tweet from "../src/components/tweets/Tweet";
 import { useAuth } from "@/contexts/AuthContext";
 import { toggleLike } from "@/services/tweetService";
+import { format } from "date-fns";
 
 jest.mock("@/contexts/AuthContext");
 jest.mock("@/services/tweetService");
@@ -43,7 +44,7 @@ describe("Tweet", () => {
     expect(screen.getByText("Test User")).toBeInTheDocument();
 
     // Check if tweet date is rendered
-    expect(screen.getByText("17/04/2025 23:37 PM")).toBeInTheDocument();
+    expect(screen.getByText(format(new Date("2025-04-18T04:37:46.876Z"), "dd/MM/yyyy HH:mm a"))).toBeInTheDocument();
 
     // Check if like count is rendered
     expect(screen.getByText("1")).toBeInTheDocument();

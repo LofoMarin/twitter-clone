@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import TweetsList from "../src/components/tweets/TweetsList";
 import { useAuth } from "@/contexts/AuthContext";
 import { getUserTweets, getAllTweets } from "@/services/tweetService";
+import { format } from "date-fns";
 
 jest.mock("@/contexts/AuthContext");
 jest.mock("@/services/tweetService");
@@ -56,7 +57,7 @@ describe("TweetsList", () => {
     expect(screen.getByText("Test User")).toBeInTheDocument();
 
     // Check if tweet date is rendered
-    expect(screen.getByText("20/04/2025 19:26 PM")).toBeInTheDocument();
+    expect(screen.getByText(format(new Date("2025-04-21T00:26:50.243Z"), "dd/MM/yyyy HH:mm a"))).toBeInTheDocument();
 
     // Check if like count is rendered
     const likeCounts = screen.getAllByText("1");
