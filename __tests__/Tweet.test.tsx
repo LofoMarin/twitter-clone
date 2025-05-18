@@ -13,7 +13,7 @@ const testTweet = {
   userId: "123",
   username: "testuser",
   name: "Test User",
-  createdAt: "2023-05-12T17:09:58Z",
+  createdAt: "2025-04-18T04:37:46.876Z",
   content: "This is a test tweet",
   likes: ["123"],
   comments: [],
@@ -43,7 +43,7 @@ describe("Tweet", () => {
     expect(screen.getByText("Test User")).toBeInTheDocument();
 
     // Check if tweet date is rendered
-    expect(screen.getByText("5/12/2023 12:09:58 PM")).toBeInTheDocument();
+    expect(screen.getByText("4/17/2025 11:37:46 PM")).toBeInTheDocument();
 
     // Check if like count is rendered
     expect(screen.getByText("1")).toBeInTheDocument();
