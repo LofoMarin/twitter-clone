@@ -48,7 +48,7 @@ function Tweet({ tweet, onTweetDeleted, onTweetUpdated }) {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString() + " " + date.toLocaleTimeString()
+    return date.toLocaleDateString('en-US') + " " + date.toLocaleTimeString('en-US')
   }
 
   const handleDelete = async () => {
